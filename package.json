@@ -1,8 +1,8 @@
 {
-  "name": "vizapp-web-embed",
+  "name": "pyllisto",
   "version": "0.1.0",
   "private": true,
-  "description": "Project that tests the ability to npm install jupyter-js-widgets within an npm project.",
+  "description": "Render Jupyter widgets in a standalone front-end",
   "license": "BSD-3-Clause",
   "author": "Nicholas Earl",
   "main": "dist/index.js",
@@ -24,7 +24,7 @@
     "@jupyterlab/services": "^3.2.1",
     "@phosphor/widgets": "^1.6.0",
     "bqplot": "/Users/nearl/projects/bqplot/js",
-    "bqplot-image-gl": "/Users/nearl/projects/bqplot-image-gl/js",
+    "bqplot-image-gl": "^0.1.4",
     "codemirror": "^5.47.0",
     "font-awesome": "^4.7.0",
     "http-server": "^0.11.1",
@@ -56,5 +56,6 @@
   },
   "resolutions": {
     "@types/react": "^15.0.16"
-  }
+  },
+  "bin": {}
 }
