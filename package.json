@@ -57,5 +57,11 @@
   "resolutions": {
     "@types/react": "^15.0.16"
   },
-  "bin": {}
+  "bin": {},
+  "build": {
+    "appId": "your.id",
+    "mac": {
+      "category": "your.app.category.type"
+    }
+  }
 }

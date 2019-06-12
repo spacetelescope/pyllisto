@@ -73,14 +73,16 @@ class WidgetManager extends HTMLManager {
             }
         ).catch((err) => {
             return new Promise((resolve, reject) => {
-               resolve(libs[moduleName]);
+                resolve(libs[moduleName]);
             }).then((module) => {
-               if (module[className]) {
-                   return module[className];
-               } else {
-                   return Promise.reject(`Class ${className} not found in module ${moduleName}@${moduleVersion}`);
-               }
-            }).catch((err) => console.log(`No module named ${moduleName}.`))
+                if (module[className]) {
+                    return module[className];
+                } else {
+                    return Promise.reject(`Class ${className} not found in module ${moduleName}@${moduleVersion}`);
+                }
+            }).catch((err) => {
+                console.log(`No module named ${moduleName}.`);
+            });
         });
     }
 

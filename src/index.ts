@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }).then(kernel => {
         Manager.kernel = kernel;
 
-        let code = require('../widget_code.json').join('\n');
+        let code = require('../examples/widget_code.json').join('\n');
 
         // Create the widget area and widget manager
         let widgetarea = document.getElementsByClassName('widgetarea')[0] as HTMLElement;

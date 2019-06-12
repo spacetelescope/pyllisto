@@ -2,6 +2,24 @@ import { app, BrowserWindow } from "electron";
 import * as path from "path";
 
 let mainWindow: Electron.BrowserWindow;
+let pythonProcess: any = null;
+let pythonPort: number = 4242;
+
+function createPythonProcess() {
+  let port = '' + pythonPort;
+  // let script = path.join(__dirname, 'baldr', 'baldr', 'app.py');
+  pythonProcess = require("child_process").spawn("python", ["-m", "notebook", "--no-browser", "--NotebookApp.allow_origin='*'", "--NotebookApp.disable_check_xsrf=True", "--NotebookApp.token=''"]);
+
+  if (pythonProcess != null) {
+    console.log("Child process started successfully.");
+  }
+}
+
+const exitPythonProcess = () => {
+  pythonProcess.kill()
+  pythonProcess = null
+  pythonProcess = null
+}
 
 function createWindow() {
   // Create the browser window.
@@ -32,6 +50,7 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+app.on("ready", createPythonProcess);
 app.on("ready", createWindow);
 
 // Quit when all windows are closed.
@@ -50,6 +69,8 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
+app.on("will-quit", exitPythonProcess);
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

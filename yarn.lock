@@ -1510,7 +1510,21 @@ bqplot-image-gl@^0.1.4:
     raw-loader "^0.5.1"
     three "^0.91.0"
 
-bqplot@^0.5.0-alpha.0, "bqplot@file:../bqplot/js":
+bqplot@^0.5.0-alpha.0:
+  version "0.5.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/bqplot/-/bqplot-0.5.0-alpha.1.tgz#b7f0f59029aa3486b09abe6c255ddab8df320d24"
+  integrity sha512-OiAXodBwVvZR0LmjFvLCaoOL83CGxAd9VEelAzghTPeEPgGoFGyu6YBqndheCA2TXdJ7SnfXjUXgVwzx1mVdyw==
+  dependencies:
+    "@jupyter-widgets/base" "^1.0.0"
+    d3 "^5.7.0"
+    d3-selection-multi "^1.0.1"
+    is-typedarray "^1.0.0"
+    popper.js "^1.0.0"
+    three "^0.91.0"
+    topojson "^1.6.24"
+    underscore "^1.8.3"
+
+"bqplot@file:../bqplot/js":
   version "0.5.0-alpha.0"
   dependencies:
     "@jupyter-widgets/base" "^1.0.0"
