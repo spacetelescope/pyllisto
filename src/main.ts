@@ -8,7 +8,9 @@ let pythonPort: number = 4242;
 function createPythonProcess() {
   let port = '' + pythonPort;
   // let script = path.join(__dirname, 'baldr', 'baldr', 'app.py');
-  pythonProcess = require("child_process").spawn("python", ["-m", "notebook", "--no-browser", "--NotebookApp.allow_origin='*'", "--NotebookApp.disable_check_xsrf=True", "--NotebookApp.token=''"]);
+  pythonProcess = require("child_process").spawn("python",
+      ["-m", "notebook", "--no-browser", "--NotebookApp.allow_origin='*'",
+        "--NotebookApp.disable_check_xsrf=True", "--NotebookApp.token=''"]);
 
   if (pythonProcess != null) {
     console.log("Child process started successfully.");
@@ -16,10 +18,9 @@ function createPythonProcess() {
 }
 
 const exitPythonProcess = () => {
-  pythonProcess.kill()
-  pythonProcess = null
-  pythonProcess = null
-}
+  pythonProcess.kill();
+  pythonProcess = null;
+};
 
 function createWindow() {
   // Create the browser window.

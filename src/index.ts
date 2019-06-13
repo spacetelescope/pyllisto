@@ -33,30 +33,48 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }).then(kernel => {
         Manager.kernel = kernel;
 
-        let code = require('../examples/widget_code.json').join('\n');
+        let notebook = require('../examples/widget_code.json');
+        console.log(notebook.cells[0].source);
+        let codeBlocks = [];
 
-        // Create the widget area and widget manager
-        let widgetarea = document.getElementsByClassName('widgetarea')[0] as HTMLElement;
-        let manager = new WidgetManager(kernel, widgetarea);
-
-        // Run backend code to create the widgets.
-        let execution = kernel.requestExecute({ code: code });
-
-        execution.onIOPub = (msg) => {
-            // If we have a display message, display the widget.
-            if (KernelMessage.isDisplayDataMsg(msg)) {
-                let widgetData: any = msg.content.data['application/vnd.jupyter.widget-view+json'];
-
-                if (widgetData !== undefined && widgetData.version_major === 2) {
-                    let model = manager.get_model(widgetData.model_id);
-                    if (model !== undefined) {
-                        model.then(model => {
-                            manager.display_model(msg, model);
-                        });
-                    }
+        if ('cells' in notebook) {
+            console.log("Cells are in notebook.");
+            for (let cell of notebook.cells) {
+                console.log("Iterating cells");
+                console.log(cell);
+                if (cell['cell_type'] == 'code') {
+                    console.log("This is code.");
+                    codeBlocks.push(cell['source'].join('\n'));
                 }
             }
-        };
+        }
+
+        // Create the widget area and widget manager
+        let widgetArea = document.getElementsByClassName('widgetarea')[0] as HTMLElement;
+        let manager = new WidgetManager(kernel, widgetArea);
+
+        console.log(codeBlocks);
+        for (let code of codeBlocks) {
+            console.log(code);
+            // Run backend code to create the widgets.
+            let execution = kernel.requestExecute({ code: code });
+
+            execution.onIOPub = (msg) => {
+                // If we have a display message, display the widget.
+                if (KernelMessage.isDisplayDataMsg(msg)) {
+                    let widgetData: any = msg.content.data['application/vnd.jupyter.widget-view+json'];
+
+                    if (widgetData !== undefined && widgetData.version_major === 2) {
+                        let model = manager.get_model(widgetData.model_id);
+                        if (model !== undefined) {
+                            model.then(model => {
+                                manager.display_model(msg, model);
+                            });
+                        }
+                    }
+                }
+            };
+        }
     });
 });
 
