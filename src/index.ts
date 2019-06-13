@@ -34,16 +34,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
         Manager.kernel = kernel;
 
         let notebook = require('../examples/widget_code.json');
-        console.log(notebook.cells[0].source);
         let codeBlocks = [];
 
         if ('cells' in notebook) {
-            console.log("Cells are in notebook.");
             for (let cell of notebook.cells) {
-                console.log("Iterating cells");
-                console.log(cell);
                 if (cell['cell_type'] == 'code') {
-                    console.log("This is code.");
                     codeBlocks.push(cell['source'].join('\n'));
                 }
             }
@@ -53,9 +48,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         let widgetArea = document.getElementsByClassName('widgetarea')[0] as HTMLElement;
         let manager = new WidgetManager(kernel, widgetArea);
 
-        console.log(codeBlocks);
         for (let code of codeBlocks) {
-            console.log(code);
             // Run backend code to create the widgets.
             let execution = kernel.requestExecute({ code: code });
 
