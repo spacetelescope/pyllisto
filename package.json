@@ -59,11 +59,12 @@
   "resolutions": {
     "@types/react": "^15.0.16"
   },
-  "bin": {},
+  "preferGlobal": true,
+  "bin": "./bin/cli.js",
   "build": {
-    "appId": "your.id",
+    "appId": "pyllisto",
     "mac": {
-      "category": "your.app.category.type"
+      "category": "com.electron.pyllisto"
     }
   }
 }
