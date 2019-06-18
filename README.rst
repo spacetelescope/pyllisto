@@ -1,47 +1,51 @@
-# Web-only interface
+Simple web server and Electron builder for iPyWidget-built applications
+-----------------------------------------------------------------------
 
-This directory demonstrates generating javascript from python code and
-mounting on a basic html page. It setups up a kernel manager to connect to a
-running jupyter kernel instance used to execute the python code. The html
-page is hosted using yarn `http-server`, while the stand-alone app is run
-using electron.
+.. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
+    :target: http://www.astropy.org
+    :alt: Powered by Astropy Badge
 
-# Pre-setup
 
-1. At your command line, clone the `jdaviz` repository via `git clone https://github.com/nmearl/jdaviz`.
-2. Install the `jdaviz` python package in your environment by running `pip install -e .` at your command line from the cloned directory.
-3. (Optional) Ensure that the `jdaviz` code works properly in your environment by running one of the example notebooks in the `examples` directory of the `jdaviz` repository, or by copy/pasting the widget code in `web/widget_code.json` (with the quotation marks and commas removed) in a jupyter notebook running in the same environment you install the `jdaviz` package. **Note** You must close your Jupyter notebook server after testing these examples as the web-based and electron apps in future steps need to use the `8888` port.
-4. Ensure `nodejs` and `npm` are installed following the installation instructions for the *Current Release* [here](https://nodejs.org/en/).
-5. Install the `yarn` package manager following the platform-specific install instructions [here](https://yarnpkg.com/en/docs/install).
-6. Download the MaNGA data file [here](https://dr15.sdss.org/sas/dr15/manga/spectro/redux/v2_4_3/7495/stack/manga-7495-12704-LOGCUBE.fits.gz), and change the path to the data file within the `web/widget_code.json` file.
 
-# Setup
 
-Currently, the dev versions of the bqplot libraries are required. To install,
-please follow the directions below:
+License
+-------
 
-1. Clone and install the [bqplot](https://github.com/bloomberg/bqplot) python package.
-2. `cd` to the `bqplot/js` directory and run an `npm install`.
-3. `cd` to `jdaviz/web`.
-4. Install the dev version of the `bqplot` node package: `yarn add /path/to/bqplot/js`.
+This project is Copyright (c) Nicholas Earl and licensed under
+the terms of the BSD 3-Clause license. This package is based upon
+the `Astropy package template <https://github.com/astropy/package-template>`_
+which is licensed under the BSD 3-clause licence. See the licenses folder for
+more information.
 
-Also, the `jupyter-vuetify` must also be installed. Because it is not yet on
-`npm`, it must also be installed manually:
 
-1. Clone the [ipyvuetify](https://github.com/mariobuikhuizen/ipyvuetify) python package.
-2. `cd` to `jdaviz/web`.
-3. Install the dev version of `ipyvuetify` node page: `yarn add /path/to/ipyvuetify/js`.
+Contributing
+------------
 
-# Browser-based application
+We love contributions! pyllisto is open source,
+built on open source, and we'd love to have you hang out in our community.
 
-1. Move to the `web` directory and run `yarn install`.
-2. Build the compiled output files by running `yarn run build`.
-3. Run `yarn run host`.
-4. In a new terminal run `python -m notebook --no-browser --NotebookApp.allow_origin="*" --NotebookApp.disable_check_xsrf=True --NotebookApp.token=''`. **WARNING: This starts an insecure Jupyter notebook server. Do not do this in production.**
-5. In a web browser, navigate to the address specified by the `yarn run host` command.
+**Imposter syndrome disclaimer**: We want your help. No, really.
 
-# Electron-based application
+There may be a little voice inside your head that is telling you that you're not
+ready to be an open source contributor; that your skills aren't nearly good
+enough to contribute. What could you possibly offer a project like this one?
 
-1. Move to the `web` directory and run `yarn install`.
-2. In a new terminal run `python -m notebook --no-browser --NotebookApp.allow_origin="*" --NotebookApp.disable_check_xsrf=True --NotebookApp.token=''`. **WARNING: This starts an insecure Jupyter notebook server. Do not do this in production.**
-3. Build and start the Electron instance using `yarn run start` in the `web` directory.
+We assure you - the little voice in your head is wrong. If you can write code at
+all, you can contribute code to open source. Contributing to open source
+projects is a fantastic way to advance one's coding skills. Writing perfect code
+isn't the measure of a good developer (that would disqualify all of us!); it's
+trying to create something, making mistakes, and learning from those
+mistakes. That's how we all improve, and we are happy to help others learn.
+
+Being an open source contributor doesn't just mean writing code, either. You can
+help out by writing documentation, tests, or even giving feedback about the
+project (and yes - that includes giving feedback about the contribution
+process). Some of these contributions may be the most valuable to the project as
+a whole, because you're coming to the project with fresh eyes, so you can see
+the errors and assumptions that seasoned contributors have glossed over.
+
+Note: This disclaimer was originally written by
+`Adrienne Lowe <https://github.com/adriennefriend>`_ for a
+`PyCon talk <https://www.youtube.com/watch?v=6Uj746j9Heo>`_, and was adapted by
+pyllisto based on its use in the README file for the
+`MetPy project <https://github.com/Unidata/MetPy>`_.

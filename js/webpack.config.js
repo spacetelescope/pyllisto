@@ -1,9 +1,9 @@
 const postcss = require('postcss');
 var path = require('path');
-var TerserPlugin = require('terser-webpack-plugin')
+var TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-    entry: './dist/index.js',
+    entry: './lib/index.js',
     mode: 'development',
     output: {
         filename: 'index.built.js',
@@ -53,5 +53,8 @@ module.exports = {
     },
     optimization: {
         minimizer: [ new TerserPlugin() ]
-    }
+    },
+    // node: {
+    //     fs: 'empty'
+    // }
 };

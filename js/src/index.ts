@@ -1,4 +1,5 @@
 import 'font-awesome/css/font-awesome.css';
+// import * as fs from 'fs';
 
 import {
     WidgetManager
@@ -34,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
         Manager.kernel = kernel;
 
         let notebook = require('../examples/widget_code.json');
+        // let path = '../examples/widget_code.json';
+        // let notebook = JSON.parse(fs.readFileSync(path, 'utf8'));
+
         let codeBlocks = [];
 
         if ('cells' in notebook) {
