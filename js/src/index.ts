@@ -1,5 +1,6 @@
 import 'font-awesome/css/font-awesome.css';
-// import * as fs from 'fs';
+import * as fs from 'fs';
+import * as jQuery from 'jquery';
 
 import {
     WidgetManager
@@ -16,7 +17,7 @@ var Manager = { kernel: null };
 
 // Mount the manager on the browser window global so the kernel connection
 // can be accessed from other js sources loaded on the page.
-window['Manager'] = Manager;
+// window['Manager'] = Manager;
 
 document.addEventListener('DOMContentLoaded', function(event) {
 
@@ -34,44 +35,52 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }).then(kernel => {
         Manager.kernel = kernel;
 
-        let notebook = require('../examples/widget_code.json');
-        // let path = '../examples/widget_code.json';
-        // let notebook = JSON.parse(fs.readFileSync(path, 'utf8'));
-
-        let codeBlocks = [];
-
-        if ('cells' in notebook) {
-            for (let cell of notebook.cells) {
-                if (cell['cell_type'] == 'code') {
-                    codeBlocks.push(cell['source'].join('\n'));
-                }
-            }
-        }
-
-        // Create the widget area and widget manager
-        let widgetArea = document.getElementsByClassName('widgetarea')[0] as HTMLElement;
-        let manager = new WidgetManager(kernel, widgetArea);
-
-        for (let code of codeBlocks) {
-            // Run backend code to create the widgets.
-            let execution = kernel.requestExecute({ code: code });
-
-            execution.onIOPub = (msg) => {
-                // If we have a display message, display the widget.
-                if (KernelMessage.isDisplayDataMsg(msg)) {
-                    let widgetData: any = msg.content.data['application/vnd.jupyter.widget-view+json'];
-
-                    if (widgetData !== undefined && widgetData.version_major === 2) {
-                        let model = manager.get_model(widgetData.model_id);
-                        if (model !== undefined) {
-                            model.then(model => {
-                                manager.display_model(msg, model);
-                            });
-                        }
-                    }
-                }
-            };
-        }
+        jQuery.getJSON('/fetch-data', (data) => {
+            console.log(data);
+            // data = JSON.parse(data);
+            loadNotebook(data);
+        });
     });
 });
+
+
+export function loadNotebook(data) {
+    // let notebook = require('../examples/widget_code.json');
+    // let path = '../examples/widget_code.json';
+    let kernel = Manager.kernel;
+    let codeBlocks = [];
+
+    if ('cells' in data) {
+        for (let cell of data.cells) {
+            if (cell['cell_type'] == 'code') {
+                codeBlocks.push(cell['source'].join('\n'));
+            }
+        }
+    }
+
+    // Create the widget area and widget manager
+    let widgetArea = document.getElementsByClassName('widgetarea')[0] as HTMLElement;
+    let manager = new WidgetManager(kernel, widgetArea);
+
+    for (let code of codeBlocks) {
+        // Run backend code to create the widgets.
+        let execution = kernel.requestExecute({ code: code });
+
+        execution.onIOPub = (msg) => {
+            // If we have a display message, display the widget.
+            if (KernelMessage.isDisplayDataMsg(msg)) {
+                let widgetData: any = msg.content.data['application/vnd.jupyter.widget-view+json'];
+
+                if (widgetData !== undefined && widgetData.version_major === 2) {
+                    let model = manager.get_model(widgetData.model_id);
+                    if (model !== undefined) {
+                        model.then(model => {
+                            manager.display_model(msg, model);
+                        });
+                    }
+                }
+            }
+        };
+    }
+}
 

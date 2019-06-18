@@ -8,7 +8,9 @@ module.exports = {
     output: {
         filename: 'index.built.js',
         path: path.resolve(__dirname, 'built'),
-        publicPath: 'built/'
+        publicPath: 'built/',
+        libraryTarget: 'var',
+        library: 'JPManager'
     },
     module: {
         rules: [
@@ -54,7 +56,7 @@ module.exports = {
     optimization: {
         minimizer: [ new TerserPlugin() ]
     },
-    // node: {
-    //     fs: 'empty'
-    // }
+    node: {
+        fs: 'empty'
+    }
 };

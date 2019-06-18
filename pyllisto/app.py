@@ -3,6 +3,7 @@ from pynpm import YarnPackage
 from flask import Flask, render_template, send_from_directory
 import os
 import shutil
+import json
 
 
 PKG = YarnPackage(
@@ -34,6 +35,12 @@ def static_built(path):
 def index():
     return send_from_directory(LIB_DIR, 'index.html')
     # return render_template('index.html')
+
+
+@app.route('/fetch-data')
+def fetch_notebook_data():
+    with open('/Users/nearl/projects/pyllisto/js/examples/widget_code.json') as f:
+        return json.dumps(json.load(f))
 
 
 @click.command()

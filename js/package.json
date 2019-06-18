@@ -23,6 +23,7 @@
     "@jupyter-widgets/jupyterlab-manager": "^0.40.0",
     "@jupyterlab/services": "^3.2.1",
     "@phosphor/widgets": "^1.6.0",
+    "@types/jquery": "^3.3.29",
     "bqplot": "/Users/nearl/projects/bqplot/js",
     "bqplot-image-gl": "^0.1.4",
     "codemirror": "^5.47.0",
