@@ -1,5 +1,4 @@
 import 'font-awesome/css/font-awesome.css';
-import * as fs from 'fs';
 import * as jQuery from 'jquery';
 
 import {
@@ -40,6 +39,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
             // data = JSON.parse(data);
             loadNotebook(data);
         });
+        // let notebook = require('../../examples/glue_code.json');
+        // loadNotebook(notebook);
     });
 });
 

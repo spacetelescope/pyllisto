@@ -14,30 +14,32 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.css$/, use: [
-                'style-loader',
-                'css-loader',
-                {
-                    loader: 'postcss-loader',
-                    options: {
-                        plugins: [
-                            postcss.plugin('delete-tilde', function() {
-                                return function (css) {
-                                    css.walkAtRules('import', function(rule) {
-                                        rule.params = rule.params.replace('~', '');
-                                    });
-                                };
-                            }),
-                            postcss.plugin('prepend', function() {
-                                return function(css) {
-                                    css.prepend("@import '@jupyter-widgets/controls/css/labvariables.css';")
-                                }
-                            }),
-                            require('postcss-import')(),
-                            require('postcss-preset-env')()
-                        ]
-                    }
-                }
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    // {
+                    //     loader: 'postcss-loader',
+                    //     options: {
+                    //         plugins: [
+                    //             postcss.plugin('delete-tilde', function() {
+                    //                 return function (css) {
+                    //                     css.walkAtRules('import', function(rule) {
+                    //                         rule.params = rule.params.replace('~', '');
+                    //                     });
+                    //                 };
+                    //             }),
+                    //             postcss.plugin('prepend', function() {
+                    //                 return function(css) {
+                    //                     css.prepend("@import '@jupyter-widgets/controls/css/labvariables.css';")
+                    //                 }
+                    //             }),
+                    //             require('postcss-import')(),
+                    //             require('postcss-preset-env')()
+                    //         ]
+                    //     }
+                    // }
             ]},
             // jquery-ui loads some images
             { test: /\.(jpg|png|gif)$/, use: 'file-loader' },

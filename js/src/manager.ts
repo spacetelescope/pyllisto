@@ -18,7 +18,7 @@ import {
     HTMLManager
 } from '@jupyter-widgets/html-manager';
 
-import './widgets.css';
+import '../static/widgets.css';
 
 export
 class WidgetManager extends HTMLManager {
