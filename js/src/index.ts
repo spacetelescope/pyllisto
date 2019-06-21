@@ -1,5 +1,15 @@
 import 'font-awesome/css/font-awesome.css';
 import * as jQuery from 'jquery';
+// import * as fs from 'fs';
+import { IpcRenderer } from 'electron';
+
+declare global {
+    interface Window {
+        require: (module: 'electron') => {
+            ipcRenderer: IpcRenderer
+        };
+    }
+}
 
 import {
     WidgetManager
@@ -34,13 +44,24 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }).then(kernel => {
         Manager.kernel = kernel;
 
-        jQuery.getJSON('/fetch-data', (data) => {
-            console.log(data);
-            // data = JSON.parse(data);
-            loadNotebook(data);
-        });
-        // let notebook = require('../../examples/glue_code.json');
-        // loadNotebook(notebook);
+        var userAgent = navigator.userAgent.toLowerCase();
+
+        if (userAgent.indexOf(' electron/') > -1) {
+            const { ipcRenderer } = window.require('electron');
+
+            ipcRenderer.once('rendererReceiveData', (event, response) => {
+                console.log(response);
+                loadNotebook(response);
+            });
+
+            ipcRenderer.send('rendererRequestData');
+        } else {
+            jQuery.getJSON('/fetch-data', (data) => {
+                console.log(data);
+                // data = JSON.parse(data);
+                loadNotebook(data);
+            });
+        }
     });
 });
 

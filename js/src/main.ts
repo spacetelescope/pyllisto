@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain as ipc } from "electron";
 import * as path from "path";
+import * as fs from 'fs';
 
 let mainWindow: Electron.BrowserWindow;
 let pythonProcess: any = null;
@@ -28,9 +29,18 @@ function createWindow() {
     height: 600,
     width: 800,
     webPreferences: {
-        nodeIntegration: true // Needed for using 'require' in html file
+      nodeIntegration: true, // Needed for using 'require' in html file
                               // https://stackoverflow.com/a/44394999/2434951
+      // preload: __dirname + '/preload.ts'
     }
+  });
+
+  ipc.on('rendererRequestData', (event, data) => {
+    console.log("RECEIVED");
+    fs.readFile(path.join(__dirname, '../tmp/widget_code.json'), function(err, data){
+        let notebook = JSON.parse(data.toString());
+        event.sender.send('rendererReceiveData', notebook);
+    });
   });
 
   // and load the index.html of the app.

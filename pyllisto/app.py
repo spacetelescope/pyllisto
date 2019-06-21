@@ -21,9 +21,13 @@ LIB_DIR = os.path.abspath(
     os.path.join(
         os.path.dirname(__file__), "..", "js", "lib"))
 
-STATIC_DIR = os.path.abspath(
+NODE_DIR = os.path.abspath(
     os.path.join(
-        os.path.dirname(__file__), "static"))
+        os.path.dirname(__file__), "..", "js"))
+
+TMP_DIR = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__), "..", "js", "tmp"))
 
 app = Flask(__name__)
 
@@ -51,36 +55,24 @@ def fetch_notebook_data():
 
 
 @click.command()
-@click.argument('notebook', type=click.Path(exists=True))
-@click.option('-r', '--rebuild', is_flag=True,
-              help='Rebuild javascript files.')
+@click.argument('path', type=click.Path(exists=True))
+@click.option('-r', '--recompile', is_flag=True,
+              help="Rebuild javascript files.")
 @click.option('-e', '--electron', is_flag=True,
-              help='Run the application in an electron shell.')
-def start(notebook, rebuild, electron):
-    # static_built = os.path.join(STATIC_DIR, 'built')
-    # static_lib = os.path.join(STATIC_DIR, 'lib')
-    #
-    # if os.path.exists(static_built):
-    #     shutil.rmtree(static_built)
-    #
-    # if os.path.exists(static_lib):
-    #     shutil.rmtree(static_lib)
-    #
-    # shutil.copytree(BUILT_DIR, static_built)
-    # shutil.copytree(LIB_DIR, static_lib)
-
+              help="Run the application in an electron shell.")
+def start(path, recompile, electron):
     # Start the jupyter kernel
-    manager = KernelManager(shell_port=8888)
-    manager.start_kernel()
+    # manager = KernelManager(shell_port=8888)
+    # manager.start_kernel()
+    #
+    # client = manager.client()
+    # client.start_channels()
+    # client.wait_for_ready()
+    #
+    # msg = client.execute("import baldr; baldr.__version__")
+    # print(msg)
 
-    client = manager.client()
-    client.start_channels()
-    client.wait_for_ready()
-
-    msg = client.execute("import baldr; baldr.__version__")
-    print(msg)
-
-    if rebuild:
+    if recompile:
         # Run NPM install
         PKG.install()
 
@@ -88,11 +80,18 @@ def start(notebook, rebuild, electron):
         PKG.run('build')
 
     if electron:
+        if os.path.exists(TMP_DIR):
+            shutil.rmtree(TMP_DIR)
+
+        os.mkdir(TMP_DIR)
+
+        shutil.copy2(path, os.path.join(TMP_DIR, 'widget_code.json'))
+
         PKG.run('start')
     else:
         # Store the data path in the global config so it can be retrieved
         # via the front-end get request
-        app.config['data_path'] = notebook
+        app.config['data_path'] = path
 
         # Start the flask http server
         app.run()
