@@ -35,8 +35,10 @@ function createWindow() {
     }
   });
 
+  // Setup an ipc between the main process and render process. Since the compiled js file
+  // cannot access the fs package to load files locally, wait until it requests the file
+  // to be loaded, and do so from the main electron process.
   ipc.on('rendererRequestData', (event, data) => {
-    console.log("RECEIVED");
     fs.readFile(path.join(__dirname, '../tmp/widget_code.json'), function(err, data){
         let notebook = JSON.parse(data.toString());
         event.sender.send('rendererReceiveData', notebook);

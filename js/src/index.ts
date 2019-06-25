@@ -1,6 +1,5 @@
 import 'font-awesome/css/font-awesome.css';
 import * as jQuery from 'jquery';
-// import * as fs from 'fs';
 import { IpcRenderer } from 'electron';
 
 declare global {
@@ -44,8 +43,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }).then(kernel => {
         Manager.kernel = kernel;
 
+        // Check to see if we're in an electron shell.
         var userAgent = navigator.userAgent.toLowerCase();
 
+        // If so, retrieve the widget code to be loaded by requesting the main process
+        // load and send the data.
         if (userAgent.indexOf(' electron/') > -1) {
             const { ipcRenderer } = window.require('electron');
 
@@ -55,6 +57,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
             });
 
             ipcRenderer.send('rendererRequestData');
+        // If we're not in an electron process, request the data from the fetch-data
+        // endpoint of the flask server.
         } else {
             jQuery.getJSON('/fetch-data', (data) => {
                 console.log(data);

@@ -67,7 +67,7 @@ class WidgetManager extends HTMLManager {
      * Load a class and return a promise to the loaded object.
      */
     protected loadClass(className: string, moduleName: string, moduleVersion: string) {
-        console.log(`Attempting load of ${moduleName}.${className}.`);
+        // console.log(`Attempting load of ${moduleName}.${className}.`);
         return super.loadClass(className, moduleName, moduleVersion).then((result) => {
                 return result;
             }
