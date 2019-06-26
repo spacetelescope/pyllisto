@@ -5,7 +5,26 @@ Simple web server and Electron builder for iPyWidget-built applications
     :target: http://www.astropy.org
     :alt: Powered by Astropy Badge
 
+Usage
+-----
 
+Ensure you have an **unsecure** Jupyter kernel running at http://localhost:8888
+
+.. code-block:: bash
+
+    $ python -m notebook --no-browser --NotebookApp.allow_origin="*" --NotebookApp.disable_check_xsrf=True --NotebookApp.token=''
+
+Running a notebook in standalone browser:
+
+.. code-block:: bash
+
+    $ pyllisto ./examples/Widget\ Example.ipynb
+
+Running a notebook in as an Electron app
+
+.. code-block:: bash
+
+    $ pyllisto ./examples/Widget\ Example.ipynb --electron
 
 
 License
