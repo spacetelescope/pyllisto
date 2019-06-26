@@ -1,11 +1,10 @@
-import click
-from pynpm import YarnPackage
-from flask import Flask, render_template, send_from_directory
+import json
 import os
 import shutil
-import json
-from .kernel import KernelManager
 
+import click
+from flask import Flask, send_from_directory
+from pynpm import YarnPackage
 
 PKG = YarnPackage(
     os.path.abspath(
